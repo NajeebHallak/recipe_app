@@ -61,5 +61,9 @@
   "preparing_to_update": "جاري التجهيز للتحديث",
   "delete_recipe": "حذف وصفة",
   "recipe_deleted_locally": "الوصفة محذوفة محلياً ومؤقتاً",
-  "id_label": "المعرف"
+  "id_label": "المعرف",
+  "share_recipe_msg": "جرب هذه الوصفة الرائعة!",
+  "print_recipe": "طباعة الوصفة",
+  "downloading_image": "جاري تجهيز الصورة...",
+  "notice_title": "تنبيه"
 }

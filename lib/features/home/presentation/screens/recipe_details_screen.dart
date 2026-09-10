@@ -3,6 +3,12 @@ import 'package:recipe/core/constants/app_responsive_constants.dart';
 import 'package:recipe/core/localization/extensions/l10n_extension.dart';
 import 'package:recipe/core/widgets/recipe_image_widget.dart';
 import 'package:recipe/features/home/data/models/recipe_model.dart';
+import 'package:go_router/go_router.dart';
+import 'package:recipe/core/router/app_page_name.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:dio/dio.dart';
+import 'package:recipe/core/util/snackbar_helper.dart';
 
 class RecipeDetailsScreen extends StatelessWidget {
   final RecipeModel? recipe;
@@ -15,9 +21,9 @@ class RecipeDetailsScreen extends StatelessWidget {
       return Scaffold(body: Center(child: Text(context.l10n.error_occurred)));
     }
 
-    final isAr = Localizations.localeOf(context).languageCode == 'ar';
-    final title = isAr ? recipe!.titleAr : recipe!.titleEn;
-    final details = isAr ? recipe!.detailsAr : recipe!.detailsEn;
+    bool isAr = Localizations.localeOf(context).languageCode == 'ar';
+    String title = isAr ? recipe!.titleAr : recipe!.titleEn;
+    String details = isAr ? recipe!.detailsAr : recipe!.detailsEn;
 
     String? imagePath = recipe!.imageUrl.isNotEmpty
         ? recipe!.imageUrl.first
@@ -40,14 +46,15 @@ class RecipeDetailsScreen extends StatelessWidget {
               actions: [
                 IconButton(
                   icon: const Icon(Icons.share),
-                  onPressed: () {
-                    // TODO: Share logic
-                  },
+                  onPressed: () =>
+                      _shareRecipe(context, title, details, imagePath),
                 ),
                 IconButton(
                   icon: const Icon(Icons.print),
                   onPressed: () {
-                    // TODO: Print logic
+                    GoRouter.of(
+                      context,
+                    ).push(AppPageName.recipePdfPreview, extra: recipe!);
                   },
                 ),
               ],
@@ -138,5 +145,37 @@ class RecipeDetailsScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _shareRecipe(
+    BuildContext context,
+    String title,
+    String details,
+    String? imagePath,
+  ) async {
+    final String shareText =
+        '${context.l10n.share_recipe_msg}\n\n$title\n${context.l10n.select_category}: ${recipe!.category}\n\n${context.l10n.instructions}:\n$details';
+
+    if (imagePath != null && imagePath.isNotEmpty) {
+      if (imagePath.startsWith('http')) {
+        SnackBarHelper.showInfo(
+          context,
+          message: context.l10n.downloading_image,
+          icon: Icons.downloading_rounded,
+        );
+        try {
+          final tempDir = await getTemporaryDirectory();
+          final savePath = '${tempDir.path}/shared_recipe_image.jpg';
+          await Dio().download(imagePath, savePath);
+          await Share.shareXFiles([XFile(savePath)], text: shareText);
+        } catch (e) {
+          await Share.share(shareText);
+        }
+      } else {
+        await Share.shareXFiles([XFile(imagePath)], text: shareText);
+      }
+    } else {
+      await Share.share(shareText);
+    }
   }
 }

@@ -61,5 +61,9 @@
   "preparing_to_update": "Preparing to update",
   "delete_recipe": "Delete recipe",
   "recipe_deleted_locally": "Recipe deleted locally and temporarily",
-  "id_label": "ID"
+  "id_label": "ID",
+  "share_recipe_msg": "Check out this great recipe!",
+  "print_recipe": "Print Recipe",
+  "downloading_image": "Preparing image...",
+  "notice_title": "Notice"
 }

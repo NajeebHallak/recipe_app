@@ -172,4 +172,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get id_label => 'المعرف';
+
+  @override
+  String get share_recipe_msg => 'جرب هذه الوصفة الرائعة!';
+
+  @override
+  String get print_recipe => 'طباعة الوصفة';
+
+  @override
+  String get downloading_image => 'جاري تجهيز الصورة...';
+
+  @override
+  String get notice_title => 'تنبيه';
 }

@@ -172,4 +172,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get id_label => 'ID';
+
+  @override
+  String get share_recipe_msg => 'Check out this great recipe!';
+
+  @override
+  String get print_recipe => 'Print Recipe';
+
+  @override
+  String get downloading_image => 'Preparing image...';
+
+  @override
+  String get notice_title => 'Notice';
 }

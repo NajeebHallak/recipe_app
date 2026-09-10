@@ -421,6 +421,30 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'المعرف'**
   String get id_label;
+
+  /// No description provided for @share_recipe_msg.
+  ///
+  /// In ar, this message translates to:
+  /// **'جرب هذه الوصفة الرائعة!'**
+  String get share_recipe_msg;
+
+  /// No description provided for @print_recipe.
+  ///
+  /// In ar, this message translates to:
+  /// **'طباعة الوصفة'**
+  String get print_recipe;
+
+  /// No description provided for @downloading_image.
+  ///
+  /// In ar, this message translates to:
+  /// **'جاري تجهيز الصورة...'**
+  String get downloading_image;
+
+  /// No description provided for @notice_title.
+  ///
+  /// In ar, this message translates to:
+  /// **'تنبيه'**
+  String get notice_title;
 }
 
 class _AppLocalizationsDelegate

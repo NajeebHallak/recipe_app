@@ -3,6 +3,7 @@ import 'package:recipe/core/router/app_page_name.dart';
 import 'package:recipe/features/home/presentation/screens/add_edit_recipe_screen.dart';
 import 'package:recipe/features/home/presentation/screens/home_screen.dart';
 import 'package:recipe/features/home/presentation/screens/recipe_details_screen.dart';
+import 'package:recipe/features/home/presentation/screens/recipe_pdf_preview_screen.dart';
 import 'package:recipe/features/home/data/models/recipe_model.dart'
     as recipe_model;
 
@@ -26,6 +27,13 @@ class AppRouter {
         builder: (context, state) {
           final recipe = state.extra as recipe_model.RecipeModel?;
           return AddEditRecipeScreen(recipe: recipe);
+        },
+      ),
+      GoRoute(
+        path: AppPageName.recipePdfPreview,
+        builder: (context, state) {
+          final recipe = state.extra as recipe_model.RecipeModel;
+          return RecipePdfPreviewScreen(recipe: recipe);
         },
       ),
     ],

@@ -33,12 +33,32 @@ class SnackBarHelper {
     );
   }
 
+  // ⚪ تنبيه للمعلومات (أبيض)
+  static void showInfo(
+    BuildContext context, {
+    required String message,
+    String? title,
+    IconData? icon,
+  }) {
+    _showSnackBar(
+      context,
+      message: message,
+      title: title ?? context.l10n.notice_title,
+      backgroundColor: Colors.white,
+      textColor: Colors.black87,
+      iconColor: Colors.blue.shade600,
+      icon: icon ?? Icons.info_outline,
+    );
+  }
+
   static void _showSnackBar(
     BuildContext context, {
     required String message,
     required String title,
     required Color backgroundColor,
     required IconData icon,
+    Color textColor = Colors.white,
+    Color? iconColor,
   }) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -51,7 +71,7 @@ class SnackBarHelper {
         content: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(icon, color: Colors.white, size: 30.rSp),
+            Icon(icon, color: iconColor ?? Colors.white, size: 30.rSp),
             AppGap.w12,
             Expanded(
               child: Column(
@@ -61,7 +81,7 @@ class SnackBarHelper {
                   Text(
                     title,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: textColor,
                       fontSize: 16.rSp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -69,7 +89,7 @@ class SnackBarHelper {
                   AppGap.h4,
                   Text(
                     message,
-                    style: TextStyle(color: Colors.white, fontSize: 14.rSp),
+                    style: TextStyle(color: textColor, fontSize: 14.rSp),
                   ),
                 ],
               ),
