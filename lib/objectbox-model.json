@@ -1,0 +1,118 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:2033515626561921566",
+      "lastPropertyId": "11:6166398869829331420",
+      "name": "RecipeModel",
+      "properties": [
+        {
+          "id": "1:1874518395235253124",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:5415414297218198410",
+          "name": "titleAr",
+          "type": 9
+        },
+        {
+          "id": "3:3832070058332276774",
+          "name": "titleEn",
+          "type": 9
+        },
+        {
+          "id": "4:7623672300805170104",
+          "name": "detailsAr",
+          "type": 9
+        },
+        {
+          "id": "5:5226734236039575868",
+          "name": "detailsEn",
+          "type": 9
+        },
+        {
+          "id": "6:5229590827432738847",
+          "name": "imageUrl",
+          "type": 30
+        },
+        {
+          "id": "7:1377134077449934751",
+          "name": "createdAt",
+          "type": 9
+        },
+        {
+          "id": "8:5294254334898132064",
+          "name": "prepTime",
+          "type": 6
+        },
+        {
+          "id": "9:4784173838478005051",
+          "name": "servings",
+          "type": 6
+        },
+        {
+          "id": "10:6054631607195949263",
+          "name": "category",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:5403328925692380284",
+      "lastPropertyId": "6:4812908944211497633",
+      "name": "SyncRequestModel",
+      "properties": [
+        {
+          "id": "1:6516694131455056184",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7367721679487990028",
+          "name": "method",
+          "type": 9
+        },
+        {
+          "id": "3:691659674967575902",
+          "name": "endpoint",
+          "type": 9
+        },
+        {
+          "id": "4:555912304104331943",
+          "name": "payloadJson",
+          "type": 9
+        },
+        {
+          "id": "5:8012830067365520242",
+          "name": "imagePath",
+          "type": 9
+        },
+        {
+          "id": "6:4812908944211497633",
+          "name": "recipeId",
+          "type": 6
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "2:5403328925692380284",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    6166398869829331420
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}
