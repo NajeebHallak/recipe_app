@@ -20,6 +20,20 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
 
   @override
   Future<void> cacheRecipes(List<RecipeModel> recipes) async {
+    List<RecipeModel> oldRecipes = _recipeBox.getAll();
+    final Map<int, bool> favoriteMap = {};
+    for (var r in oldRecipes) {
+      if (r.isFavorite) {
+        favoriteMap[r.id] = true;
+      }
+    }
+
+    for (var r in recipes) {
+      if (favoriteMap.containsKey(r.id)) {
+        r.isFavorite = true;
+      }
+    }
+
     _recipeBox.removeAll();
     _recipeBox.putMany(recipes);
   }

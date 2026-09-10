@@ -9,10 +9,85 @@ class HomeCubit extends Cubit<HomeState> {
 
   HomeCubit(this.homeRepo) : super(HomeInitial());
 
-  // الاحتفاظ بالقائمة محلياً داخل الكيوبت
-  List<RecipeModel> recipesList = [];
+  // القائمة الكاملة للوصفات (مصدر الحقيقة)
+  List<RecipeModel> allRecipes = [];
 
-  // جلب البيانات (عرض من اللوكال ثم التحديث بالخلفية)
+  // القائمة المعروضة بعد الفلترة
+  List<RecipeModel> displayedRecipes = [];
+
+  // حالة الفلاتر
+  String? currentCategory; // null means 'All'
+  String searchQuery = '';
+  bool showOnlyFavorites = false;
+
+  // تطبيق كل الفلاتر وعرض النتيجة
+  void _applyFilters() {
+    displayedRecipes = allRecipes.where((recipe) {
+      // 1. فلترة القسم
+      bool categoryMatch = true;
+      if (currentCategory != null && currentCategory!.isNotEmpty) {
+        categoryMatch = recipe.category == currentCategory;
+      }
+
+      // 2. فلترة البحث
+      bool searchMatch = true;
+      if (searchQuery.isNotEmpty) {
+        String query = searchQuery.toLowerCase();
+        searchMatch =
+            recipe.titleAr.toLowerCase().contains(query) ||
+            recipe.titleEn.toLowerCase().contains(query);
+      }
+
+      // 3. فلترة المفضلة
+      bool favoriteMatch = true;
+      if (showOnlyFavorites) {
+        favoriteMatch = recipe.isFavorite;
+      }
+
+      return categoryMatch && searchMatch && favoriteMatch;
+    }).toList();
+
+    if (!isClosed) emit(HomeGetRecipesSuccess(displayedRecipes));
+  }
+
+  // تغيير القسم
+  void changeCategory(String? category) {
+    currentCategory = category;
+    _applyFilters();
+  }
+
+  // البحث
+  void search(String query) {
+    searchQuery = query;
+    _applyFilters();
+  }
+
+  // تبديل عرض المفضلة
+  void toggleFavoritesView() {
+    showOnlyFavorites = !showOnlyFavorites;
+    _applyFilters();
+  }
+
+  // تبديل حالة الوصفة (مفضلة / غير مفضلة)
+  Future<void> toggleFavorite(RecipeModel recipe) async {
+    recipe.isFavorite = !recipe.isFavorite;
+
+    // تحديث الواجهة فوراً
+    _applyFilters();
+
+    // حفظ التغيير محلياً
+    await homeRepo.toggleFavoriteLocal(recipe);
+  }
+
+  // إعادة جلب البيانات المحلية بعد تحديث صامت
+  Future<void> _fetchLocalAndFilter() async {
+    final localResult = await homeRepo.getRecipes();
+    localResult.fold((_) {}, (recipes) {
+      allRecipes = recipes;
+      _applyFilters();
+    });
+  }
+
   Future<void> getRecipes() async {
     if (!isClosed) emit(HomeGetRecipesLoading());
 
@@ -23,36 +98,29 @@ class HomeCubit extends Cubit<HomeState> {
         if (!isClosed) emit(HomeGetRecipesError(failure.errorMassage));
       },
       (recipes) {
-        recipesList = recipes;
-        if (!isClosed) emit(HomeGetRecipesSuccess(recipesList));
+        allRecipes = recipes;
+        _applyFilters();
       },
     );
 
     // 2. تحديث البيانات في الخلفية بصمت
     final remoteResult = await homeRepo.refreshRecipes();
-    remoteResult.fold(
-      (failure) {
-        // يمكننا تجاهل الخطأ في الخلفية لكي لا نزعج المستخدم إذا كان أوفلاين
-        // أو إظهاره إذا أردنا
-      },
-      (recipes) {
-        // تحديث القائمة الصامت
-        recipesList = recipes;
-        if (!isClosed) emit(HomeGetRecipesSuccess(recipesList));
-      },
-    );
+    remoteResult.fold((failure) {}, (_) {
+      // نجلب من اللوكال مرة أخرى لأن اللوكال داتا سورس قام بدمج الوصفات
+      // الجديدة مع الحفاظ على قيم الـ isFavorite القديمة
+      _fetchLocalAndFilter();
+    });
   }
 
-  // تحديث صريح للسحب للتحديث (Pull to Refresh)
+  // السحب للتحديث
   Future<void> refreshRecipes() async {
     final result = await homeRepo.refreshRecipes();
     result.fold(
       (failure) {
         if (!isClosed) emit(HomeGetRecipesError(failure.errorMassage));
       },
-      (recipes) {
-        recipesList = recipes;
-        if (!isClosed) emit(HomeGetRecipesSuccess(recipesList));
+      (_) {
+        _fetchLocalAndFilter();
       },
     );
   }
@@ -69,9 +137,7 @@ class HomeCubit extends Cubit<HomeState> {
       },
       (_) {
         if (!isClosed) emit(HomeAddRecipeSuccess());
-        // إعادة جلب البيانات فوراً لكي تظهر الوصفة الجديدة على الشاشة
-        // بسبب الـ Optimistic Update ستظهر فوراً من الـ Local
-        getRecipes();
+        _fetchLocalAndFilter();
       },
     );
   }
@@ -88,7 +154,7 @@ class HomeCubit extends Cubit<HomeState> {
       },
       (_) {
         if (!isClosed) emit(HomeUpdateRecipeSuccess());
-        getRecipes();
+        _fetchLocalAndFilter();
       },
     );
   }
@@ -105,7 +171,7 @@ class HomeCubit extends Cubit<HomeState> {
       },
       (_) {
         if (!isClosed) emit(HomeDeleteRecipeSuccess());
-        getRecipes();
+        _fetchLocalAndFilter();
       },
     );
   }

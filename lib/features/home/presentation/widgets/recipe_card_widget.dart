@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe/core/constants/app_responsive_constants.dart';
 import 'package:recipe/core/localization/extensions/l10n_extension.dart';
 import 'package:recipe/core/widgets/recipe_image_widget.dart';
 import 'package:recipe/features/home/data/models/recipe_model.dart';
+import 'package:recipe/features/home/presentation/cubits/home/home_cubit.dart';
 
 class RecipeCardWidget extends StatelessWidget {
   final RecipeModel recipe;
@@ -51,17 +53,16 @@ class RecipeCardWidget extends StatelessWidget {
                 // زر المفضلة في أعلى اليمين (أو اليسار حسب اللغة)
                 Positioned(
                   top: 8.rH,
-                  right:
-                      8.rW, // Assuming Arabic UI (RTL), right is logical left
+                  right: 8.rW, // Assuming Arabic UI (RTL), right is logical left
                   child: CircleAvatar(
                     backgroundColor: Colors.white.withOpacity(0.8),
                     child: IconButton(
-                      icon: const Icon(
-                        Icons.favorite_border,
-                        color: Colors.grey,
+                      icon: Icon(
+                        recipe.isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: recipe.isFavorite ? Colors.red : Colors.grey,
                       ),
                       onPressed: () {
-                        // TODO: Toggle favorite
+                        context.read<HomeCubit>().toggleFavorite(recipe);
                       },
                     ),
                   ),

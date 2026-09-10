@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:2033515626561921566",
-      "lastPropertyId": "11:6166398869829331420",
+      "lastPropertyId": "12:6644830669590752466",
       "name": "RecipeModel",
       "properties": [
         {
@@ -58,6 +58,11 @@
           "id": "10:6054631607195949263",
           "name": "category",
           "type": 9
+        },
+        {
+          "id": "12:6644830669590752466",
+          "name": "isFavorite",
+          "type": 1
         }
       ],
       "relations": []

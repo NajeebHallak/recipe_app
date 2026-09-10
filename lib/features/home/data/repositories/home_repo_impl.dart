@@ -168,4 +168,14 @@ class HomeRepoImpl implements HomeRepo {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> toggleFavoriteLocal(RecipeModel recipe) async {
+    try {
+      await localDataSource.updateRecipeLocal(recipe);
+      return const Right(unit);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

@@ -23,7 +23,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(1, 2033515626561921566),
     name: 'RecipeModel',
-    lastPropertyId: const obx_int.IdUid(11, 6166398869829331420),
+    lastPropertyId: const obx_int.IdUid(12, 6644830669590752466),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -84,6 +84,12 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(10, 6054631607195949263),
         name: 'category',
         type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(12, 6644830669590752466),
+        name: 'isFavorite',
+        type: 1,
         flags: 0,
       ),
     ],
@@ -213,7 +219,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         );
         final createdAtOffset = fbb.writeString(object.createdAt);
         final categoryOffset = fbb.writeString(object.category);
-        fbb.startTable(12);
+        fbb.startTable(13);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, titleArOffset);
         fbb.addOffset(2, titleEnOffset);
@@ -224,6 +230,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addInt64(7, object.prepTime);
         fbb.addInt64(8, object.servings);
         fbb.addOffset(9, categoryOffset);
+        fbb.addBool(11, object.isFavorite);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -270,6 +277,12 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final categoryParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 22, '');
+        final isFavoriteParam = const fb.BoolReader().vTableGet(
+          buffer,
+          rootOffset,
+          26,
+          false,
+        );
         final object = RecipeModel(
           id: idParam,
           titleAr: titleArParam,
@@ -281,6 +294,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           prepTime: prepTimeParam,
           servings: servingsParam,
           category: categoryParam,
+          isFavorite: isFavoriteParam,
         );
 
         return object;
@@ -406,6 +420,11 @@ class RecipeModel_ {
   /// See [RecipeModel.category].
   static final category = obx.QueryStringProperty<RecipeModel>(
     _entities[0].properties[9],
+  );
+
+  /// See [RecipeModel.isFavorite].
+  static final isFavorite = obx.QueryBooleanProperty<RecipeModel>(
+    _entities[0].properties[10],
   );
 }
 

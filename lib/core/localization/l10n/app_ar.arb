@@ -65,5 +65,7 @@
   "share_recipe_msg": "جرب هذه الوصفة الرائعة!",
   "print_recipe": "طباعة الوصفة",
   "downloading_image": "جاري تجهيز الصورة...",
-  "notice_title": "تنبيه"
+  "notice_title": "تنبيه",
+  "empty_recipes_title": "لم نجد أية وصفات! 🍳",
+  "empty_recipes_subtitle": "عذراً، لم نتمكن من العثور على أية وصفات تطابق بحثك. جرب كلمات مختلفة أو تصفح الأقسام الأخرى."
 }

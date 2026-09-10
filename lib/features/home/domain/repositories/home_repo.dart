@@ -8,5 +8,6 @@ abstract class HomeRepo {
   Future<Either<Failure, List<RecipeModel>>> refreshRecipes();
   Future<Either<Failure, Unit>> addRecipe(RecipeRequest request);
   Future<Either<Failure, Unit>> updateRecipe(RecipeRequest request);
+  Future<Either<Failure, Unit>> toggleFavoriteLocal(RecipeModel recipe);
   Future<Either<Failure, Unit>> deleteRecipe(int id);
 }

@@ -14,6 +14,7 @@ class RecipeModel {
   int prepTime;
   int servings;
   String category;
+  bool isFavorite;
 
   RecipeModel({
     required this.id,
@@ -26,6 +27,7 @@ class RecipeModel {
     required this.prepTime,
     required this.servings,
     required this.category,
+    this.isFavorite = false,
   });
 
   factory RecipeModel.fromJson(Map<String, dynamic> json) {
@@ -51,6 +53,7 @@ class RecipeModel {
       prepTime: json['prep_time'] ?? 0,
       servings: json['servings'] ?? 0,
       category: json['category'] ?? '',
+      isFavorite: json['is_favorite'] ?? false,
     );
   }
 
@@ -66,6 +69,7 @@ class RecipeModel {
       'prep_time': prepTime,
       'servings': servings,
       'category': category,
+      'is_favorite': isFavorite,
     };
   }
 }
