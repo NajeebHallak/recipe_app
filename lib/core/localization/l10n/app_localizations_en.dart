@@ -184,4 +184,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notice_title => 'Notice';
+
+  @override
+  String get empty_recipes_title => 'No Recipes Found! 🍳';
+
+  @override
+  String get empty_recipes_subtitle =>
+      'Sorry, we couldn\'t find any recipes matching your search. Try different keywords or browse other categories.';
 }

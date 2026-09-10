@@ -65,5 +65,7 @@
   "share_recipe_msg": "Check out this great recipe!",
   "print_recipe": "Print Recipe",
   "downloading_image": "Preparing image...",
-  "notice_title": "Notice"
+  "notice_title": "Notice",
+  "empty_recipes_title": "No Recipes Found! 🍳",
+  "empty_recipes_subtitle": "Sorry, we couldn't find any recipes matching your search. Try different keywords or browse other categories."
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recipe/core/localization/extensions/l10n_extension.dart';
+import 'package:recipe/core/constants/app_responsive_constants.dart';
 
 class EmptyRecipesWidget extends StatelessWidget {
   const EmptyRecipesWidget({super.key});
@@ -6,25 +8,46 @@ class EmptyRecipesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.search_off, size: 64, color: Colors.grey.shade400),
-          const SizedBox(height: 16),
-          Text(
-            'لا توجد وصفات هنا بعد',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey.shade600,
-              fontWeight: FontWeight.bold,
+      child: Padding(
+        padding: EdgeInsets.all(32.rW),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.all(24.rW),
+              decoration: BoxDecoration(
+                color: Colors.red.withOpacity(0.08),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.restaurant_menu,
+                size: 80.rSp,
+                color: Colors.red.shade400,
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'حاول تغيير الفلتر أو البحث عن شيء آخر',
-            style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
-          ),
-        ],
+            AppGap.h24,
+            Text(
+              context.l10n.empty_recipes_title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 22.rSp,
+                color: Theme.of(context).textTheme.bodyLarge?.color,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            AppGap.h12,
+            Text(
+              context.l10n.empty_recipes_subtitle,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 15.rSp,
+                height: 1.5,
+                color: Colors.grey.shade600,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

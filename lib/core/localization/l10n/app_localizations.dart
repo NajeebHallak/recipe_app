@@ -445,6 +445,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تنبيه'**
   String get notice_title;
+
+  /// No description provided for @empty_recipes_title.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم نجد أية وصفات! 🍳'**
+  String get empty_recipes_title;
+
+  /// No description provided for @empty_recipes_subtitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'عذراً، لم نتمكن من العثور على أية وصفات تطابق بحثك. جرب كلمات مختلفة أو تصفح الأقسام الأخرى.'**
+  String get empty_recipes_subtitle;
 }
 
 class _AppLocalizationsDelegate

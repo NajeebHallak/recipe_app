@@ -24,8 +24,8 @@ class HomeBody extends StatelessWidget {
             HomeCategoriesWidget(),
 
             AppGap.h16,
-
-            const HomeRecipesConsumerWidget(),
+            //الوصفات
+            HomeRecipesConsumerWidget(),
           ],
         ),
       ),

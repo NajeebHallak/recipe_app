@@ -184,4 +184,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notice_title => 'تنبيه';
+
+  @override
+  String get empty_recipes_title => 'لم نجد أية وصفات! 🍳';
+
+  @override
+  String get empty_recipes_subtitle =>
+      'عذراً، لم نتمكن من العثور على أية وصفات تطابق بحثك. جرب كلمات مختلفة أو تصفح الأقسام الأخرى.';
 }
