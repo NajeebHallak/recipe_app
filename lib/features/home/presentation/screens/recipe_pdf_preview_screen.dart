@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:typed_data';
+import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
@@ -60,15 +60,12 @@ class RecipePdfPreviewScreen extends StatelessWidget {
 
     bool isAr = Localizations.localeOf(context).languageCode == 'ar';
 
-    // 1. Load fonts
-    pw.Font fontTitle = await PdfGoogleFonts.cairoBold().timeout(
-      const Duration(seconds: 5),
-      onTimeout: () => pw.Font.helvetica(),
-    );
-    pw.Font fontBody = await PdfGoogleFonts.cairoRegular().timeout(
-      const Duration(seconds: 5),
-      onTimeout: () => pw.Font.helvetica(),
-    );
+    // 1. Load fonts from local assets
+    final ByteData boldData = await rootBundle.load('assets/fonts/Cairo-Bold.ttf');
+    final ByteData regularData = await rootBundle.load('assets/fonts/Cairo-Regular.ttf');
+
+    pw.Font fontTitle = pw.Font.ttf(boldData);
+    pw.Font fontBody = pw.Font.ttf(regularData);
 
     // 2. Load Image
     pw.ImageProvider? pdfImage;

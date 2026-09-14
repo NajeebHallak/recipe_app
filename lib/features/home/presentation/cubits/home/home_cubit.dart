@@ -26,7 +26,14 @@ class HomeCubit extends Cubit<HomeState> {
       // 1. فلترة القسم
       bool categoryMatch = true;
       if (currentCategory != null && currentCategory!.isNotEmpty) {
-        categoryMatch = recipe.category == currentCategory;
+        String normalizeCategory(String cat) {
+          if (cat == 'وجبات رئيسية' || cat == 'Main Meals') return 'main_meals';
+          if (cat == 'حلويات' || cat == 'Sweets') return 'sweets';
+          if (cat == 'مقبلات' || cat == 'Appetizers') return 'appetizers';
+          if (cat == 'مشروبات' || cat == 'Drinks') return 'drinks';
+          return cat;
+        }
+        categoryMatch = normalizeCategory(recipe.category) == normalizeCategory(currentCategory!);
       }
 
       // 2. فلترة البحث
